@@ -1,4 +1,4 @@
-package agh.ics.opp.model;
+package agh.ics.oop.model;
 
 public enum MoveDirections {
     FORWARD,
