@@ -28,7 +28,10 @@ public class Vector2d {
         return new Vector2d(this.x-other.x,this.y-other.y);
     }
     public Vector2d upperRight(Vector2d other){
-        return new Vector2d(Math.max(this.x,other.y),Math.max(this.x,this.y)) ;
+        return new Vector2d(Math.max(x,other.x),Math.max(y,other.y)) ;
+    }
+    public Vector2d lowerLeft(Vector2d other){
+        return new Vector2d(Math.min(x,other.x),Math.min(y,other.y));
     }
     public Vector2d opposite(){return new Vector2d(-this.x,-this.y);}
 

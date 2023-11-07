@@ -1,5 +1,6 @@
 package agh.ics.oop;
 
+import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.MoveDirections;
 import agh.ics.oop.model.Vector2d;
 
