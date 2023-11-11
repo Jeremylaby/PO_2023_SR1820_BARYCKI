@@ -1,27 +1,26 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.MoveDirections;
+import agh.ics.oop.model.MoveDirection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class OptionsParser{
-    public static MoveDirections[] convertToEnum(String[] args){
-        int pos=0;
-        MoveDirections[] directions= new MoveDirections[args.length];
+    public static List<MoveDirection> convertToEnum(String[] args){
+      List<MoveDirection> directions=new ArrayList<>();
         for(String arg:args){
-            MoveDirections direction = switch (arg){
-                case "f" -> MoveDirections.FORWARD;
-                case "b" -> MoveDirections.BACKWARD;
-                case "r" -> MoveDirections.RIGHT;
-                case "l" -> MoveDirections.LEFT;
+            MoveDirection direction = switch (arg){
+                case "f" -> MoveDirection.FORWARD;
+                case "b" -> MoveDirection.BACKWARD;
+                case "r" -> MoveDirection.RIGHT;
+                case "l" -> MoveDirection.LEFT;
                 default -> null;
             };
             if(direction!=null){
-                directions[pos]=direction;
-                pos+=1;
+                directions.add(direction);
             }
         }
-        directions= Arrays.copyOf(directions,pos);
        return directions;
     }
 
