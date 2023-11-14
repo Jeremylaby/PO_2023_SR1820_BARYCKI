@@ -17,6 +17,6 @@ class OptionsParserTest {
         String [] args = {"f","b","r","x","l"};
         List<MoveDirection> directions = new ArrayList<>(Arrays.asList(MoveDirection.FORWARD,MoveDirection.BACKWARD,
                 MoveDirection.RIGHT, MoveDirection.LEFT));
-        assertTrue(directions.equals(OptionsParser.convertToEnum(args)));
+        assertTrue(directions.equals(OptionsParser.parse(args)));
     }
 }

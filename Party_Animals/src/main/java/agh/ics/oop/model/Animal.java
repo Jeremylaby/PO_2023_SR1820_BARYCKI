@@ -32,11 +32,27 @@ public class Animal {
         return this.position.equals(position);
     }
     public void move(MoveDirection direction){
+        int x=position.getX();
+        int y=position.getY();
+        int nx=orientation.toUnitVector().getX();
+        int ny=orientation.toUnitVector().getY();
         switch (direction){
-            case FORWARD -> position.add(orientation.toUnitVector());
-            case BACKWARD -> position.subtract(orientation.toUnitVector());
-            case RIGHT -> orientation.next();
-            case LEFT -> orientation.previous();
+            case FORWARD :
+                if(x+nx<=4 && x+nx>=0&&y+ny<=4 && y+ny>=0) {
+                    position=position.add(orientation.toUnitVector());
+                }
+                break;
+            case BACKWARD:
+                if(x-nx<=4 && x-nx>=0&&y-ny<=4 && y-ny>=0){
+                    position=position.subtract(orientation.toUnitVector());
+                }
+                break;
+            case RIGHT:
+                orientation=orientation.next();
+                break;
+            case LEFT :
+                orientation=orientation.previous();
+                break;
         }
     }
 }

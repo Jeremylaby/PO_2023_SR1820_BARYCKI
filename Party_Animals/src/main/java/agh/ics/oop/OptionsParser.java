@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OptionsParser{
-    public static List<MoveDirection> convertToEnum(String[] args){
+    public static List<MoveDirection> parse(String[] args){
       List<MoveDirection> directions=new ArrayList<>();
         for(String arg:args){
             MoveDirection direction = switch (arg){
