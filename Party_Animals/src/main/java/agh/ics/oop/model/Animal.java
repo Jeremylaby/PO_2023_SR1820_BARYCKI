@@ -1,6 +1,10 @@
 package agh.ics.oop.model;
 
+import java.util.Objects;
+
 public class Animal {
+    public static  final Vector2d BORDER_LEFT = new Vector2d(0,0);
+    public static final Vector2d BORDER_RIGHT = new Vector2d(4,4);
     private MapDirection orientation;
     private Vector2d position;
 
@@ -29,30 +33,25 @@ public class Animal {
                 '}';
     }
     public boolean isAt(Vector2d position){
-        return this.position.equals(position);
+        return Objects.equals(this.position,position);
     }
     public void move(MoveDirection direction){
-        int x=position.getX();
-        int y=position.getY();
-        int nx=orientation.toUnitVector().getX();
-        int ny=orientation.toUnitVector().getY();
-        switch (direction){
-            case FORWARD :
-                if(x+nx<=4 && x+nx>=0&&y+ny<=4 && y+ny>=0) {
-                    position=position.add(orientation.toUnitVector());
-                }
-                break;
-            case BACKWARD:
-                if(x-nx<=4 && x-nx>=0&&y-ny<=4 && y-ny>=0){
-                    position=position.subtract(orientation.toUnitVector());
-                }
-                break;
-            case RIGHT:
-                orientation=orientation.next();
-                break;
-            case LEFT :
-                orientation=orientation.previous();
-                break;
+        Vector2d borderLeft=new Vector2d(0,0);
+        Vector2d borderRight=new Vector2d(4,4);
+        Vector2d oldposition = position;
+        orientation= switch (direction) {
+            case FORWARD,BACKWARD -> orientation;
+            case RIGHT-> orientation.next();
+            case LEFT -> orientation.previous();
+        };
+        Vector2d newposition = switch (direction){
+            case FORWARD -> position.add(orientation.toUnitVector());
+            case BACKWARD -> position.subtract(orientation.toUnitVector());
+            case LEFT,RIGHT -> position;
+        };
+        if (newposition.follows(BORDER_LEFT)
+                && newposition.precedes(BORDER_RIGHT)){
+            position=newposition;
         }
     }
 }
