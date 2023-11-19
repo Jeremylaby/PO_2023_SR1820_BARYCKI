@@ -60,5 +60,26 @@ class SimulationTest {
             assertTrue(animal.equals(rectangularMap.objectAt(animal.getPosition())));
         }
     }
+    @Test//Dopisanie zwierzaka poza mapę
+    void run3(){
+        List<Vector2d> postions=List.of(new Vector2d(-1,0),new Vector2d(20,0)
+                ,new Vector2d(0,-1),new Vector2d(-1,-1),new Vector2d(-5,-5)
+                ,new Vector2d(65,66),new Vector2d(10,0),new Vector2d(-3,-4)
+                ,new Vector2d(7,10),new Vector2d(6,6),new Vector2d(0,0));
+        String[] args1 ={"b","f","r","r","b","f","r","r","f","b","r","r","f","b"};
+        RectangularMap rectangularMap=new RectangularMap(7,10);
+        List<MoveDirection> moves = OptionsParser.parse(args1);
+        Simulation simulation =new Simulation(postions,moves,rectangularMap);
+        assertTrue(simulation.getAnimals().size()==2 && rectangularMap.getAnimals().size()==2);
+        for(Animal animal:simulation.getAnimals()){
+            assertTrue(animal.equals(rectangularMap.objectAt(animal.getPosition())));
+        }
+        simulation.run();
+        assertTrue(simulation.getAnimals().size()==2 && rectangularMap.getAnimals().size()==2);
+        for(Animal animal:simulation.getAnimals()){
+            assertTrue(animal.equals(rectangularMap.objectAt(animal.getPosition())));
+        }
+
+    }
 
 }
