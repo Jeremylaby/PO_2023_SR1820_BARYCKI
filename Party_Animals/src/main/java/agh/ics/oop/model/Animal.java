@@ -27,15 +27,12 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "orientation=" + orientation +
-                ", position=" + position +
-                '}';
+        return orientation.toString();
     }
     public boolean isAt(Vector2d position){
         return Objects.equals(this.position,position);
     }
-    public void move(MoveDirection direction){
+    public void move(MoveDirection direction,MoveValidator validator){
         orientation= switch (direction) {
             case FORWARD,BACKWARD -> orientation;
             case RIGHT-> orientation.next();
@@ -46,8 +43,7 @@ public class Animal {
             case BACKWARD -> position.subtract(orientation.toUnitVector());
             case LEFT,RIGHT -> position;
         };
-        if (newposition.follows(BORDER_LEFT)
-                && newposition.precedes(BORDER_RIGHT)){
+        if (validator.canMoveTo(newposition)){
             position=newposition;
         }
     }
