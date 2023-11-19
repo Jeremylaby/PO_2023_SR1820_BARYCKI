@@ -36,9 +36,6 @@ public class Animal {
         return Objects.equals(this.position,position);
     }
     public void move(MoveDirection direction){
-        Vector2d borderLeft=new Vector2d(0,0);
-        Vector2d borderRight=new Vector2d(4,4);
-        Vector2d oldposition = position;
         orientation= switch (direction) {
             case FORWARD,BACKWARD -> orientation;
             case RIGHT-> orientation.next();
