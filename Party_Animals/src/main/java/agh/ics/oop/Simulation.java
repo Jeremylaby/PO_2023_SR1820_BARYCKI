@@ -11,7 +11,7 @@ import java.util.List;
 public class Simulation {
     private List<Animal> animals;
     private List<MoveDirection> moves;
-    private WorldMap worldMap;
+    private WorldMap<Animal,Vector2d> worldMap;
     public List<Animal> getAnimals() {
         return animals;
     }
@@ -20,7 +20,7 @@ public class Simulation {
         return moves;
     }
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> moves,WorldMap worldMap) {
+    public Simulation(List<Vector2d> positions, List<MoveDirection> moves,WorldMap<Animal,Vector2d> worldMap) {
         this.worldMap=worldMap;
         this.animals=new ArrayList<>();
         for(Vector2d position:positions){
