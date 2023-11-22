@@ -3,8 +3,6 @@ package agh.ics.oop.model;
 import java.util.Objects;
 
 public class Animal {
-    public static  final Vector2d BORDER_LEFT = new Vector2d(0,0);
-    public static final Vector2d BORDER_RIGHT = new Vector2d(4,4);
     private MapDirection orientation;
     private Vector2d position;
 

@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

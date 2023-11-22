@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
-    private List<Animal> animals;
-    private List<MoveDirection> moves;
-    private WorldMap worldMap;
+    private final List<Animal> animals;
+    private final List<MoveDirection> moves;
+    private final WorldMap worldMap;
     public List<Animal> getAnimals() {
         return animals;
     }
