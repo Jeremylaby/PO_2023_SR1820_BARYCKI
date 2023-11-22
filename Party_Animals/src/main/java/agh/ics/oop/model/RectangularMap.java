@@ -2,21 +2,25 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RectangularMap implements WorldMap {
+    private static final Vector2d LEFT_LOWER_CORNER=new Vector2d(0,0);
+    private final Vector2d rightuppercorner;
     private final Map<Vector2d, Animal> animals = new HashMap<>();
     private final int width;
     private final int height;
 
     public RectangularMap(int width,int height) {
+        rightuppercorner=new Vector2d(width-1,height-1);
         this.width = width;
         this.height=height;
     }
 
     public Map<Vector2d, Animal> getAnimals() {
-        return animals;
+        return Map.copyOf(animals);
     }
 
     public int getWidth() {
@@ -29,9 +33,7 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        Vector2d borderLeft=new Vector2d(0,0);
-        Vector2d borderRight=new Vector2d(width-1,height-1);
-        return (!isOccupied(position)&&position.follows(borderLeft)&& position.precedes(borderRight));
+        return (!isOccupied(position)&&position.follows(LEFT_LOWER_CORNER)&& position.precedes(rightuppercorner));
     }
 
     @Override
@@ -45,15 +47,13 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        animals.remove(animal.getPosition());
-        animal.move(direction,this);
-        animals.put(animal.getPosition(),animal);
+        if (isOccupied(animal.getPosition()) && objectAt(animal.getPosition()).equals(animal)) {
+            animals.remove(animal.getPosition());
+            animal.move(direction, this);
+            animals.put(animal.getPosition(), animal);
+        }
     }
 
-    @Override
-    public boolean isOccupied(Vector2d position) {
-        return animals.containsKey(position);
-    }
 
     @Override
     public Animal objectAt(Vector2d position) {
