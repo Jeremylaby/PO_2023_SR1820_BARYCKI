@@ -33,9 +33,7 @@ public interface WorldMap extends MoveValidator {
      * @param position Position to check.
      * @return True if the position is occupied.
      */
-    default boolean isOccupied(Vector2d position){
-        return objectAt(position)!=null;
-    }
+    boolean isOccupied(Vector2d position);
 
     /**
      * Return an animal at a given position.
