@@ -42,4 +42,16 @@ public abstract class AbstractWorldMap implements WorldMap {
         return visualizer.draw(lowerLeft,upperRight);
 
     }
+
+    @Override
+    public Map<Vector2d, WorldElement> getElements() {
+        Map<Vector2d,WorldElement> worldElementMap= new HashMap<>();
+        for (Grass grass: grasses.values()){
+            worldElementMap.put(grass.getPosition(),grass);
+        }
+        for (Animal animal: animals.values()){
+            worldElementMap.put(animal.getPosition(),animal);
+        }
+        return worldElementMap;
+    }
 }
