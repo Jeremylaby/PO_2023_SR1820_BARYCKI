@@ -12,7 +12,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         return Map.copyOf(animals);
     }
     public boolean place(Animal animal) {
-        if (this.canMoveTo(animal.getPosition())){
+        if (canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
             return true;
         }
@@ -20,7 +20,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     public boolean isOccupied(Vector2d position) {
-        return this.objectAt(position)!=null;
+        return objectAt(position)!=null;
     }
 
     public void move(Animal animal, MoveDirection direction) {
@@ -31,7 +31,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
     }
     public boolean canMoveTo(Vector2d position) {
-        return !this.isOccupied(position);
+        return !isOccupied(position);
     }
     public WorldElement objectAt(Vector2d position) {
         return animals.get(position);

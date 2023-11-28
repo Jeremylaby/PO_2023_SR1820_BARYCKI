@@ -5,10 +5,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GrassField implements WorldMap {
-    private final Map<Vector2d,Grass> grasses=new HashMap<>();
-
-    private final Map<Vector2d, Animal> animals = new HashMap<>();
+public class GrassField extends AbstractWorldMap {
 
     public GrassField( int grassCount) {
         int maxWidth= (int) Math.sqrt(grassCount*10);
@@ -19,15 +16,13 @@ public class GrassField implements WorldMap {
         }
     }
 
-    public Map<Vector2d, Animal> getAnimals() {
-        return animals;
-    }
 
     public Map<Vector2d, Grass> getGrasses() {
-        return grasses;
+        return Map.copyOf(grasses);
     }
+    @Override
     public boolean isOccupied(Vector2d position) {
-        return animals.get(position)!=null||grasses.get(position)!=null;
+        return super.isOccupied(position)||grasses.get(position)!=null;
     }
 
     @Override
@@ -37,26 +32,9 @@ public class GrassField implements WorldMap {
 
     @Override
     public WorldElement objectAt(Vector2d position) {
-        return animals.get(position)==null
+        return canMoveTo(position)==true
                 ? grasses.get(position)
                 : animals.get(position);
-    }
-    @Override
-    public void move(Animal animal, MoveDirection direction) {
-        if (isOccupied(animal.getPosition()) && this.objectAt(animal.getPosition()).equals(animal)) {
-            animals.remove(animal.getPosition());
-            animal.move(direction, this);
-            animals.put(animal.getPosition(), animal);
-        }
-    }
-    @Override
-
-    public boolean place(Animal animal) {
-        if (this.canMoveTo(animal.getPosition())){
-            animals.put(animal.getPosition(),animal);
-            return true;
-        }
-        return false;
     }
     @Override
     public String toString() {
@@ -77,7 +55,6 @@ public class GrassField implements WorldMap {
         }
         Vector2d lowerLeft=new Vector2d(minX,minY);
         Vector2d upperRight=new Vector2d(maxX,maxY);
-        MapVisualizer visualizer = new MapVisualizer(this);
-        return visualizer.draw(lowerLeft,upperRight);
+        return super.toString(lowerLeft,upperRight);
     }
 }
