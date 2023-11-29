@@ -34,6 +34,7 @@ public class RandomPositionGenerator implements Iterable<Vector2d> {
 
     @Override
     public Iterator<Vector2d> iterator() {
+
         return randompositions.iterator();
     }
 }

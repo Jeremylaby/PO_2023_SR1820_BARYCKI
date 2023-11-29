@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractWorldMap implements WorldMap {
-    protected final Map<Vector2d, Grass> grasses = new HashMap<>();
+
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     public Map<Vector2d, Animal> getAnimals() {
         return Map.copyOf(animals);
@@ -19,9 +19,6 @@ public abstract class AbstractWorldMap implements WorldMap {
         return false;
     }
 
-    public boolean isOccupied(Vector2d position) {
-        return objectAt(position)!=null;
-    }
 
     public void move(Animal animal, MoveDirection direction) {
         if (this.isOccupied(animal.getPosition()) && this.objectAt(animal.getPosition()).equals(animal)) {
@@ -31,7 +28,8 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
     }
     public boolean canMoveTo(Vector2d position) {
-        return !isOccupied(position);
+
+        return !animals.containsKey(position);
     }
     public WorldElement objectAt(Vector2d position) {
         return animals.get(position);
@@ -46,9 +44,6 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public Map<Vector2d, WorldElement> getElements() {
         Map<Vector2d,WorldElement> worldElementMap= new HashMap<>();
-        for (Grass grass: grasses.values()){
-            worldElementMap.put(grass.getPosition(),grass);
-        }
         for (Animal animal: animals.values()){
             worldElementMap.put(animal.getPosition(),animal);
         }
