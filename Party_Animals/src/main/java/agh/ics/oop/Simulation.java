@@ -35,7 +35,7 @@ public class Simulation {
         int ind=0;
         for(MoveDirection move:moves){
             worldMap.move(animals.get(ind),move);
-            System.out.println(worldMap.toString());
+            System.out.println(worldMap);
             ind+=1;
             ind%=animals.size();
 
