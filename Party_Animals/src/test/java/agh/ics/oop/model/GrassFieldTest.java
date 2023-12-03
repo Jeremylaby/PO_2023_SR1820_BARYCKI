@@ -7,11 +7,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GrassFieldTest extends AbstractWorldMap {
+class GrassFieldTest  {
 
     @Test//umieszczam wszystkie zwierzęta poza obszarem traw żeby sprawdzić
         // czy zwierze moze ruszyć się na pole z trawą i czy mapa jest w teori nieskończona
-    void canMoveTo() {
+    void canMoveTo() throws PositionAlreadyOccupiedException {
         GrassField grassField = new GrassField(5);
         Vector2d vector2d1=new Vector2d(-1,-2);
         Vector2d vector2d2=new Vector2d(-4,-3);
@@ -37,7 +37,7 @@ class GrassFieldTest extends AbstractWorldMap {
     }
 
     @Test // sprawdzamy czy możemy umieścić zwierzę gdziekolwiek tylko nie jedno na drugim
-    void place() {
+    void place() throws PositionAlreadyOccupiedException {
         GrassField grassField = new GrassField(5);
         Vector2d vector2d1=new Vector2d(1,2);
         Vector2d vector2d2=new Vector2d(10,10);
@@ -53,14 +53,22 @@ class GrassFieldTest extends AbstractWorldMap {
         Animal animal7 = new Animal(vector2d5);
         List<Animal> animals=List.of(animal1,animal2,animal3,animal4,animal5,animal6,animal7);
         assertTrue(grassField.place(animal1));
-        assertFalse(grassField.place(animal2));
-        assertFalse(grassField.place(animal3));
+
+        try{grassField.place(animal2);}
+        catch (PositionAlreadyOccupiedException e){
+            assertTrue(true);
+        }
+        try{grassField.place(animal3);}
+        catch (PositionAlreadyOccupiedException e ){
+            assertTrue(true);
+        }
+
         assertTrue(grassField.place(animal4));
         assertTrue(grassField.place(animal5));
         assertTrue(grassField.place(animal6));
     }
     @Test//czy możemy umieścić zwierzaki na trawie
-    void place2(){
+    void place2() throws PositionAlreadyOccupiedException {
         GrassField grassField = new GrassField(5);
         List<Animal> animals=new ArrayList<>();
         for(Grass grass:grassField.getGrasses().values()){
@@ -72,7 +80,7 @@ class GrassFieldTest extends AbstractWorldMap {
     }
 
     @Test//czy zwierze może wejść w zwierze
-    void move() {
+    void move() throws PositionAlreadyOccupiedException {
         GrassField grassfield =new GrassField(5);
         Vector2d vector2d1=new Vector2d(1,1);
         Vector2d vector2d2=new Vector2d(1,2);
@@ -99,7 +107,7 @@ class GrassFieldTest extends AbstractWorldMap {
         assertTrue(grassfield.getAnimals().get(animal2.getPosition()).equals(animal2));
     }
     @Test//czy zwierze może sie ruszać teoretycznie gdziekolwiek w zasięgu int
-    void move2() {
+    void move2() throws PositionAlreadyOccupiedException {
         GrassField grassfield =new GrassField(5);
         Vector2d vector2d1=new Vector2d(0,0);
         Vector2d vector2d2=new Vector2d(0,1000);
@@ -141,7 +149,7 @@ class GrassFieldTest extends AbstractWorldMap {
     }
 
     @Test//sprawdzamy czy occupied zwfraca true dla pól z trawami i pól ze zwierzakami
-    void isOccupied() {
+    void isOccupied() throws PositionAlreadyOccupiedException {
         GrassField grassfield =new GrassField(5);
         Vector2d vector2d1=new Vector2d(1,2);
         Vector2d vector2d2=new Vector2d(10,10);
@@ -167,7 +175,7 @@ class GrassFieldTest extends AbstractWorldMap {
     }
 
     @Test
-    void objectAt() {
+    void objectAt() throws PositionAlreadyOccupiedException {
         GrassField grassField = new GrassField(5);
         Vector2d vector2d1=new Vector2d(-1,-2);
         Vector2d vector2d2=new Vector2d(-4,-3);
@@ -192,7 +200,7 @@ class GrassFieldTest extends AbstractWorldMap {
         }
     }
     @Test//stawiamy zwierzaki na trawie i sprawdzamy czy zwraca dobrze
-    void objectAt2() {
+    void objectAt2() throws PositionAlreadyOccupiedException {
         GrassField grassField = new GrassField(5);
         List<Animal> animals=new ArrayList<>();
         for(Grass grass:grassField.getGrasses().values()){

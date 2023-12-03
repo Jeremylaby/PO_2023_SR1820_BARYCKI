@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.util.Boundary;
 
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public interface WorldMap extends MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
+    Boundary getCurrentBounds();
     WorldElement objectAt(Vector2d position);
     Map<Vector2d,WorldElement> getElements();
 }

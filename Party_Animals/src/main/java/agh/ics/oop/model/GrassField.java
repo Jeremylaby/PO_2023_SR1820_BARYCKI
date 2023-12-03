@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.RandomPositionGenerator;
 
 import java.util.HashMap;
@@ -38,20 +39,18 @@ public class GrassField extends AbstractWorldMap {
                 :grasses.get(position);
 
     }
-    @Override
-    public String toString() {
-       Vector2d minVector=new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
-       Vector2d maxVector=new Vector2d(Integer.MIN_VALUE,Integer.MAX_VALUE);
-        for(Animal animal:animals.values()){
-            minVector=minVector.lowerLeft(animal.getPosition());
-            maxVector=maxVector.upperRight(animal.getPosition());
-        }
-        for(Grass grass:grasses.values()){
-            minVector=minVector.lowerLeft(grass.getPosition());
-            maxVector=maxVector.upperRight(grass.getPosition());
 
+
+    @Override
+    public Boundary getCurrentBounds() {
+        Vector2d minVector=new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
+        Vector2d maxVector=new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
+        Map<Vector2d,WorldElement> worldElementMap=getElements();
+        for(WorldElement worldElement:worldElementMap.values()){
+            minVector=minVector.lowerLeft(worldElement.getPosition());
+            maxVector=maxVector.upperRight(worldElement.getPosition());
         }
-        return super.toString(minVector,maxVector);
+        return new Boundary(minVector,maxVector);
     }
 
     @Override
@@ -62,4 +61,5 @@ public class GrassField extends AbstractWorldMap {
         }
         return worldElementMap;
     }
+
 }

@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.Collections;
@@ -34,8 +35,9 @@ public class RectangularMap extends AbstractWorldMap {
                 && position.follows(LEFT_LOWER_CORNER)
                 && position.precedes(rightuppercorner);
     }
+
     @Override
-    public String toString() {
-        return super.toString(LEFT_LOWER_CORNER, rightuppercorner);
+    public Boundary getCurrentBounds() {
+        return new Boundary(LEFT_LOWER_CORNER,rightuppercorner);
     }
 }
