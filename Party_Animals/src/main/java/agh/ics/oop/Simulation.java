@@ -9,6 +9,7 @@ public class Simulation {
     private final List<Animal> animals;
     private final List<MoveDirection> moves;
     private final WorldMap worldMap;
+
     public List<Animal> getAnimals() {
         return animals;
     }
@@ -17,24 +18,27 @@ public class Simulation {
         return moves;
     }
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> moves,WorldMap worldMap) {
-        this.worldMap=worldMap;
-        this.animals=new ArrayList<>();
-        for(Vector2d position:positions){
-            Animal animal=new Animal(position);
-            try{if(worldMap.place(animal)){
+    public Simulation(List<Vector2d> positions, List<MoveDirection> moves, WorldMap worldMap) {
+        this.worldMap = worldMap;
+        this.animals = new ArrayList<>();
+        for (Vector2d position : positions) {
+            Animal animal = new Animal(position);
+            try {
+                worldMap.place(animal);
                 animals.add(animal);
-            }}
-            catch (PositionAlreadyOccupiedException e){}
+            } catch (PositionAlreadyOccupiedException e) {
+                e.printStackTrace();
+            }
         }
-        this.moves=moves;
+        this.moves = moves;
     }
-    public void run(){
-        int ind=0;
-        for(MoveDirection move:moves){
-            worldMap.move(animals.get(ind),move);
-            ind+=1;
-            ind%=animals.size();
+
+    public void run() {
+        int ind = 0;
+        for (MoveDirection move : moves) {
+            worldMap.move(animals.get(ind), move);
+            ind += 1;
+            ind %= animals.size();
 
         }
     }

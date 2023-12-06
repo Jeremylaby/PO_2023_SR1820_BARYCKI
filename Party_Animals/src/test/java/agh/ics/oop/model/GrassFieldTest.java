@@ -52,7 +52,7 @@ class GrassFieldTest  {
         Animal animal6= new Animal(vector2d4);
         Animal animal7 = new Animal(vector2d5);
         List<Animal> animals=List.of(animal1,animal2,animal3,animal4,animal5,animal6,animal7);
-        assertTrue(grassField.place(animal1));
+        grassField.place(animal1);
 
         try{grassField.place(animal2);}
         catch (PositionAlreadyOccupiedException e){
@@ -63,9 +63,9 @@ class GrassFieldTest  {
             assertTrue(true);
         }
 
-        assertTrue(grassField.place(animal4));
-        assertTrue(grassField.place(animal5));
-        assertTrue(grassField.place(animal6));
+        grassField.place(animal4);
+        grassField.place(animal5);
+        grassField.place(animal6);
     }
     @Test//czy możemy umieścić zwierzaki na trawie
     void place2() throws PositionAlreadyOccupiedException {
@@ -75,7 +75,7 @@ class GrassFieldTest  {
             animals.add(new Animal(grass.getPosition()));
         }
         for(Animal animal:animals){
-            assertTrue(grassField.place(animal));
+            grassField.place(animal);
         }
     }
 
