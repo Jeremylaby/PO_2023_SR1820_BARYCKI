@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RectangularMapTest {
 
     @Test//Testujemy czy zwierze może wyjść za mapę i czy może wejść w inne zwierze
-    void canMoveTo() {
+    void canMoveTo() throws PositionAlreadyOccupiedException {
         RectangularMap rectangularMap=new RectangularMap(5,10);
         Vector2d vector2d1=new Vector2d(1,2);
         Vector2d vector2d2=new Vector2d(4,3);
@@ -37,7 +37,7 @@ class RectangularMapTest {
     @Test//testujemy możliwość umnieszczenia zwierzaka za mapą zwierzaka na zwierzaku
         // i czy zwierzak jest umieszony na dobrej popzycji
 
-    void place() {
+    void place() throws PositionAlreadyOccupiedException {
         RectangularMap rectangularMap=new RectangularMap(5,5);
         Vector2d vector2d1=new Vector2d(1,2);
         Vector2d vector2d2=new Vector2d(10,10);
@@ -53,7 +53,8 @@ class RectangularMapTest {
         Animal animal7 = new Animal(vector2d5);
         List<Animal> animals=List.of(animal1,animal2,animal3,animal4,animal5,animal6,animal7);
         for(Animal animal:animals){
-            rectangularMap.place(animal);
+            try{rectangularMap.place(animal);}
+            catch (PositionAlreadyOccupiedException e){}
         }
         assertTrue(rectangularMap.getAnimals().size()==2);
         assertTrue(rectangularMap.getAnimals().get(vector2d1).equals(animal1));
@@ -70,7 +71,7 @@ class RectangularMapTest {
     }
 
     @Test//zwierzaki próbują wyjść za mapę
-    void move() {
+    void move() throws PositionAlreadyOccupiedException {
         RectangularMap rectangularMap=new RectangularMap(5,10);
         Vector2d vector2d1=new Vector2d(0,9);
         Vector2d vector2d2=new Vector2d(4,0);
@@ -102,7 +103,7 @@ class RectangularMapTest {
         assertTrue(animal2.getPosition().equals(vector2d6));
     }
     @Test//zwierzaki próbują wejść w siebie
-    void move2() {
+    void move2() throws PositionAlreadyOccupiedException {
         RectangularMap rectangularMap=new RectangularMap(5,10);
         Vector2d vector2d1=new Vector2d(1,1);
         Vector2d vector2d2=new Vector2d(1,2);
@@ -132,7 +133,7 @@ class RectangularMapTest {
     }
 
     @Test
-    void objectAt() {
+    void objectAt() throws PositionAlreadyOccupiedException {
         RectangularMap rectangularMap=new RectangularMap(5,10);
         Vector2d vector2d1=new Vector2d(0,9);
         Vector2d vector2d2=new Vector2d(4,0);

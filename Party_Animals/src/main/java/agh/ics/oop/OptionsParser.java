@@ -16,7 +16,7 @@ public class OptionsParser{
                 case "b" -> MoveDirection.BACKWARD;
                 case "r" -> MoveDirection.RIGHT;
                 case "l" -> MoveDirection.LEFT;
-                default -> null;
+                default -> throw new IllegalArgumentException(arg + " is not legal move specification");
             };
             if(direction!=null){
                 directions.add(direction);
