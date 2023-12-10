@@ -3,13 +3,10 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
-
+    private UUID id=UUID.randomUUID();
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     private List<MapChangeListener> observers = new ArrayList<>();
 
@@ -69,6 +66,10 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public abstract Boundary getCurrentBounds();
+    @Override
+    public UUID getId() {
+        return id;
+    }
 
     @Override
     public String toString() {

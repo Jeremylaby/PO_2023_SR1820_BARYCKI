@@ -22,6 +22,7 @@ public class World {
     }
 
     public static void main(String[] args) {
+        System.out.println("System wystartował");
         try {
             List<MoveDirection> directions = OptionsParser.parse(args);
             List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4));
@@ -37,6 +38,7 @@ public class World {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
+        System.out.println("System zakończył działanie");
 
     }
 
