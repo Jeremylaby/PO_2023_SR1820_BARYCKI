@@ -6,7 +6,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
-    private UUID id=UUID.randomUUID();
+    private UUID id = UUID.randomUUID();
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     private List<MapChangeListener> observers = new ArrayList<>();
 
@@ -23,24 +23,29 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     private void mapChanged(String message) {
-        observers.forEach(observer-> observer.mapChanged(this,message));
+        observers.forEach(observer -> observer.mapChanged(this, message));
     }
 
-    public void place(Animal animal) throws PositionAlreadyOccupiedException {
+    public synchronized void place(Animal animal) throws PositionAlreadyOccupiedException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
             mapChanged("Animal was placed on: " + animal.getPosition().toString());
-        }else { throw new PositionAlreadyOccupiedException(animal.getPosition());}
+        } else {
+            throw new PositionAlreadyOccupiedException(animal.getPosition());
+        }
     }
 
-    public void move(Animal animal, MoveDirection direction) {
+    public synchronized void move(Animal animal, MoveDirection direction) {
         if (this.isOccupied(animal.getPosition()) && this.objectAt(animal.getPosition()).equals(animal)) {
             Vector2d oldPosition = animal.getPosition();
+            MapDirection oldOrientation =animal.getOrientation();
             animals.remove(animal.getPosition());
             animal.move(direction, this);
             animals.put(animal.getPosition(), animal);
             if (!oldPosition.equals(animal.getPosition())) {//Nie wiem czy mam sygnalizować każdą próbę ruchu czy tyl;ko faktyczną zmianę więc zostawiam to tak
                 mapChanged("Animal was moved from " + oldPosition.toString() + " to " + animal.getPosition().toString());
+            }else if(oldOrientation!=animal.getOrientation()){
+                mapChanged("Animal " +animal.getPosition()+ " rotated from "+oldOrientation+" to "+animal.getOrientation());
             }
         }
     }
@@ -66,6 +71,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public abstract Boundary getCurrentBounds();
+
     @Override
     public UUID getId() {
         return id;
