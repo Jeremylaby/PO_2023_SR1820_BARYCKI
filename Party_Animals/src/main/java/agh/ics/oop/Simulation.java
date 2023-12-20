@@ -33,7 +33,7 @@ public class Simulation implements Runnable {
         this.moves = moves;
     }
 
-    public synchronized void run() {
+    public void run() {
         int ind = 0;
         for (MoveDirection move : moves) {
             worldMap.move(animals.get(ind), move);

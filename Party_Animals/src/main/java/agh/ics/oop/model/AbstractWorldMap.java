@@ -6,7 +6,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     private List<MapChangeListener> observers = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         observers.forEach(observer -> observer.mapChanged(this, message));
     }
 
-    public synchronized void place(Animal animal) throws PositionAlreadyOccupiedException {
+    public void place(Animal animal) throws PositionAlreadyOccupiedException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
             mapChanged("Animal was placed on: " + animal.getPosition().toString());
