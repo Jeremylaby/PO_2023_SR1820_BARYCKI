@@ -14,10 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,8 +31,8 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private GridPane mapGrid;
     private  WorldMap map;
-    private final  static double CELL_WIDTH=35;
-    private final  static double CELL_HEIGHT=35;
+    private final  static double CELL_WIDTH=50;
+    private final  static double CELL_HEIGHT=50;
     public void setWorldMap(WorldMap map){
         this.map=map;
     }
@@ -79,10 +77,29 @@ public class SimulationPresenter implements MapChangeListener {
         int height=lhvector.getY();
         Map<Vector2d,WorldElement> elements= worldMap.getElements();
         elements.forEach((key,value)->{
-            System.out.println(key.toString());
-            Label label = new Label(value.toString());
-            GridPane.setHalignment(label, HPos.CENTER);
-            mapGrid.add(label,key.getX()-x+1,height-(key.getY()-y)+1);
+            if(value instanceof Animal){
+                Image image = new Image("/images/pig.png");
+                ImageView imageView = new ImageView(image);
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(CELL_WIDTH);
+                imageView.setFitHeight(CELL_HEIGHT);
+                Label label = new Label(value.toString());
+                label.setPrefWidth(CELL_WIDTH);
+                label.setPrefHeight(CELL_HEIGHT);
+
+                StackPane stackPane = new StackPane();
+                stackPane.getChildren().addAll(imageView,label);
+                label.setAlignment(Pos.CENTER);
+                mapGrid.add(stackPane,key.getX()-x+1,height-(key.getY()-y)+1);
+            } else {
+                Image image = new Image("/images/grass.png");
+                ImageView imageView = new ImageView(image);
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(CELL_WIDTH);
+                imageView.setFitHeight(CELL_HEIGHT);
+                mapGrid.add(imageView,key.getX()-x+1,height-(key.getY()-y)+1);
+            }
+
         } );
     }
 
