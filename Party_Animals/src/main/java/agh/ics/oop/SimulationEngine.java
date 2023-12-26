@@ -21,7 +21,7 @@ public class SimulationEngine {
         simulations.forEach(simulation -> simulation.run());
     }
 
-    public void runAsync() {
+    public void runAsync() throws InterruptedException{
         threads.forEach(thread -> thread.start());
     }
 
@@ -37,8 +37,8 @@ public class SimulationEngine {
         executorService.awaitTermination(10, TimeUnit.SECONDS);
 
     }
-    public void runAsyncInThreadPool() throws InterruptedException{
-        threads.forEach(thread -> executorService.submit(thread));
-        awaitSimulationsEnd();
-    }
+        public void runAsyncInThreadPool() throws InterruptedException{
+            threads.forEach(thread -> executorService.submit(thread));
+            awaitSimulationsEnd();
+        }
 }
