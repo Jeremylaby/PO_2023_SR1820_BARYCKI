@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -122,6 +123,8 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private static void configureStage(BorderPane viewRoot, Stage newStage) {
+        Image icon = new Image("/images/pig2.png");
+        newStage.getIcons().add(icon);
         Scene scene = new Scene(viewRoot);
         newStage.setScene(scene);
         newStage.setTitle("Simulation Window");
