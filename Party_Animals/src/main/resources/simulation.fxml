@@ -23,5 +23,5 @@ styleClass="border-pane">
 
     <bottom><VBox styleClass="bottomBar">
         <Label text="Rozpocznij symulację:"/>
-        <Button text="Start" onAction="#onSimulationStartClicked"/></VBox></bottom>
+        <Button fx:id="Button" text="Start" onAction="#onSimulationStartClicked"/></VBox></bottom>
 </BorderPane>
