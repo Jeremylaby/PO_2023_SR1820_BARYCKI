@@ -36,6 +36,7 @@ public class SimulationWindowPresenter implements MapChangeListener {
             String formattedDateTime = now.format(formatter);
             System.out.println(formattedDateTime + " " + message);
         });
+        map.addObserver(new FileMapDisplay(map.getId()));
     }
 
     private void createGrid(Boundary boundary){
