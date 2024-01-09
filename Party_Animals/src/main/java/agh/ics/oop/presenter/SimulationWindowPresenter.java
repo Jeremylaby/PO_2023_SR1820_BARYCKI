@@ -80,29 +80,6 @@ public class SimulationWindowPresenter implements MapChangeListener {
         int height=lhvector.getY();
         Map<Vector2d, WorldElement> elements= worldMap.getElements();
         elements.forEach((key,value)->{
-            if(value instanceof Animal){
-                Image image = new Image("/images/pig.png");
-                ImageView imageView = new ImageView(image);
-                imageView.setPreserveRatio(true);
-                imageView.setFitWidth(CELL_WIDTH);
-                imageView.setFitHeight(CELL_HEIGHT);
-                Label label = new Label(value.toString());
-                label.setPrefWidth(CELL_WIDTH);
-                label.setPrefHeight(CELL_HEIGHT);
-
-                StackPane stackPane = new StackPane();
-                stackPane.getChildren().addAll(imageView,label);
-                label.setAlignment(Pos.CENTER);
-                mapGrid.add(stackPane,key.getX()-x+1,height-(key.getY()-y)+1);
-            } else {
-                Image image = new Image("/images/grass.png");
-                ImageView imageView = new ImageView(image);
-                imageView.setPreserveRatio(true);
-                imageView.setFitWidth(CELL_WIDTH);
-                imageView.setFitHeight(CELL_HEIGHT);
-                mapGrid.add(imageView,key.getX()-x+1,height-(key.getY()-y)+1);
-            }
-
         } );
     }
     public synchronized void mapChanged(WorldMap worldMap, String message) {
