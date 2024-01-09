@@ -10,8 +10,13 @@ public class Grass implements WorldElement {
     public Vector2d getPosition() {
         return position;
     }
+    @Override
     public String getTexture(){
         return"grass.png";
+    }
+    @Override
+    public String getTextureText(){
+        return "Trawa";
     }
     @Override
     public String toString() {

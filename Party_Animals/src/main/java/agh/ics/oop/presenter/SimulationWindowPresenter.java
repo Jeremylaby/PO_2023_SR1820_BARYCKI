@@ -2,6 +2,7 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.WorldElementBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,6 +81,8 @@ public class SimulationWindowPresenter implements MapChangeListener {
         int height=lhvector.getY();
         Map<Vector2d, WorldElement> elements= worldMap.getElements();
         elements.forEach((key,value)->{
+            WorldElementBox worldElementBox = new WorldElementBox(value);
+            mapGrid.add(worldElementBox,key.getX()-x+1,height-(key.getY()-y)+1);
         } );
     }
     public synchronized void mapChanged(WorldMap worldMap, String message) {
