@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import javafx.application.Application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class World {
                 GrassField grassField = new GrassField(10);
                 RectangularMap rectangularMap = new RectangularMap(5, 5);
                 grassField.addObserver(consoleMapDisplay);
+
                 rectangularMap.addObserver(consoleMapDisplay);
                 WorldMap map = (i % 2 == 0) ? grassField : rectangularMap;
                 simulations.add(new Simulation(positions, directions, map));

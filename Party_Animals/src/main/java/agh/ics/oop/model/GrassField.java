@@ -57,7 +57,9 @@ public class GrassField extends AbstractWorldMap {
     public Map<Vector2d, WorldElement> getElements() {
         Map<Vector2d,WorldElement> worldElementMap=super.getElements();
         for (Grass grass: grasses.values()){
-            worldElementMap.put(grass.getPosition(),grass);
+            if(!worldElementMap.containsKey(grass.getPosition())) {
+                worldElementMap.put(grass.getPosition(), grass);
+            }
         }
         return worldElementMap;
     }
