@@ -39,6 +39,6 @@ public class SimulationEngine {
     }
         public void runAsyncInThreadPool() throws InterruptedException{
             threads.forEach(thread -> executorService.submit(thread));
-            awaitSimulationsEnd();
+//            awaitSimulationsEnd();
         }
 }

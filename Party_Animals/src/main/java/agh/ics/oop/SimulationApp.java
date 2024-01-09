@@ -26,7 +26,7 @@ public class SimulationApp extends Application {
 
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
-        Image icon = new Image("/images/pig.jpg");
+        Image icon = new Image("/images/pig.png");
         primaryStage.getIcons().add(icon);
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);

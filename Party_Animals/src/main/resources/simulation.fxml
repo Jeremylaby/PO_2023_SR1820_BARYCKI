@@ -20,13 +20,8 @@ styleClass="border-pane">
     <top><HBox styleClass="topBar">
         <Label text="Wprowadź listę ruchów:"/>
         <TextField fx:id="movesTextField"/></HBox></top>
-    <center>
-        <VBox styleClass="centerBar">
-        <Label fx:id="infoLabel" text="All animals will be living here!" textAlignment="CENTER"/>
-        <GridPane styleClass="grid-pane" fx:id="mapGrid" gridLinesVisible="true" />
-        </VBox>
-    </center>
+
     <bottom><VBox styleClass="bottomBar">
         <Label text="Rozpocznij symulację:"/>
-        <Button text="Start" onAction="#onSimulationStartClicked"/></VBox></bottom>
+        <Button fx:id="Button" text="Start" onAction="#onSimulationStartClicked"/></VBox></bottom>
 </BorderPane>
