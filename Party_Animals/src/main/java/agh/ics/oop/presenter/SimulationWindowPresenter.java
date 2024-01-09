@@ -15,6 +15,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class SimulationWindowPresenter implements MapChangeListener {
@@ -28,7 +30,14 @@ public class SimulationWindowPresenter implements MapChangeListener {
     public void setWorldMap(AbstractWorldMap map){
         this.map=map;
         map.addObserver(this);
+        map.addObserver((worldMap, message) -> {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
+            System.out.println(formattedDateTime + " " + message);
+        });
     }
+
     private void createGrid(Boundary boundary){
         Vector2d lhvector=boundary.rightUpper().subtract(boundary.leftLower());
         int x = boundary.leftLower().getX();

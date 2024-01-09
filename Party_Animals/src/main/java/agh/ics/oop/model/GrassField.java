@@ -5,6 +5,8 @@ import agh.ics.oop.model.util.RandomPositionGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
@@ -31,15 +33,6 @@ public class GrassField extends AbstractWorldMap {
     }
 
 
-    @Override
-    public WorldElement objectAt(Vector2d position) {
-        WorldElement worldElement =super.objectAt(position);
-        return worldElement!=null
-                ?worldElement
-                :grasses.get(position);
-
-    }
-
 
     @Override
     public Boundary getCurrentBounds() {
@@ -55,13 +48,8 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public Map<Vector2d, WorldElement> getElements() {
-        Map<Vector2d,WorldElement> worldElementMap=super.getElements();
-        for (Grass grass: grasses.values()){
-            if(!worldElementMap.containsKey(grass.getPosition())) {
-                worldElementMap.put(grass.getPosition(), grass);
-            }
-        }
-        return worldElementMap;
+        Stream<Grass> grassElements =grasses.values().stream().filter(grass -> !animals.containsKey(grass.getPosition()));
+        return Stream.concat(grassElements,super.getElements().values().stream()).collect(Collectors.toMap(WorldElement::getPosition,worldElement -> worldElement));
     }
 
 }

@@ -6,23 +6,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class OptionsParser{
-    public static List<MoveDirection> parse(String[] args){
-      List<MoveDirection> directions=new LinkedList<>();
-        for(String arg:args){
-            MoveDirection direction = switch (arg){
-                case "f" -> MoveDirection.FORWARD;
-                case "b" -> MoveDirection.BACKWARD;
-                case "r" -> MoveDirection.RIGHT;
-                case "l" -> MoveDirection.LEFT;
-                default -> throw new IllegalArgumentException(arg + " is not legal move specification");
-            };
-            if(direction!=null){
-                directions.add(direction);
-            }
-        }
-       return directions;
+public class OptionsParser {
+    public static List<MoveDirection> parse(String[] args) {
+        return Stream.of(args)
+                .map(arg -> {
+                    switch (arg) {
+                        case "f":
+                            return MoveDirection.FORWARD;
+                        case "b":
+                            return MoveDirection.BACKWARD;
+                        case "r":
+                            return MoveDirection.RIGHT;
+                        case "l":
+                            return MoveDirection.LEFT;
+                        default:
+                            throw new IllegalArgumentException(arg + " is not a legal move specification");
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
 }

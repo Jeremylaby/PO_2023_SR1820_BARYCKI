@@ -4,6 +4,9 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public abstract class AbstractWorldMap implements WorldMap {
     private final UUID id = UUID.randomUUID();
@@ -36,7 +39,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     public synchronized void move(Animal animal, MoveDirection direction) {
-        if (this.isOccupied(animal.getPosition()) && this.objectAt(animal.getPosition()).equals(animal)) {
+        if (this.isOccupied(animal.getPosition()) && this.objectAt(animal.getPosition()).filter(elem -> elem.equals(animal)).isPresent()) {
             Vector2d oldPosition = animal.getPosition();
             MapDirection oldOrientation =animal.getOrientation();
             animals.remove(animal.getPosition());
@@ -55,9 +58,6 @@ public abstract class AbstractWorldMap implements WorldMap {
         return !animals.containsKey(position);
     }
 
-    public WorldElement objectAt(Vector2d position) {
-        return animals.get(position);
-    }
 
 
     @Override
@@ -82,5 +82,11 @@ public abstract class AbstractWorldMap implements WorldMap {
         MapVisualizer visualizer = new MapVisualizer(this);
         Boundary boundary = getCurrentBounds();
         return visualizer.draw(boundary.leftLower(), boundary.rightUpper());
+    }
+
+    @Override
+    public List<Animal> getOrderedAnimals() {
+        return animals.values().stream().sorted(Comparator.comparing((Animal animal) -> animal.getPosition().getX())
+                .thenComparing(animal -> animal.getPosition().getY())).toList();
     }
 }
