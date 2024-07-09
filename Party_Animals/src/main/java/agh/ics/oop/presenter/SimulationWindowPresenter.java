@@ -2,6 +2,7 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.util.Boundary;
+import agh.ics.oop.model.util.WorldElementBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class SimulationWindowPresenter implements MapChangeListener {
@@ -28,7 +31,15 @@ public class SimulationWindowPresenter implements MapChangeListener {
     public void setWorldMap(AbstractWorldMap map){
         this.map=map;
         map.addObserver(this);
+        map.addObserver((worldMap, message) -> {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
+            System.out.println(formattedDateTime + " " + message);
+        });
+        map.addObserver(new FileMapDisplay(map.getId()));
     }
+
     private void createGrid(Boundary boundary){
         Vector2d lhvector=boundary.rightUpper().subtract(boundary.leftLower());
         int x = boundary.leftLower().getX();
@@ -70,29 +81,8 @@ public class SimulationWindowPresenter implements MapChangeListener {
         int height=lhvector.getY();
         Map<Vector2d, WorldElement> elements= worldMap.getElements();
         elements.forEach((key,value)->{
-            if(value instanceof Animal){
-                Image image = new Image("/images/pig.png");
-                ImageView imageView = new ImageView(image);
-                imageView.setPreserveRatio(true);
-                imageView.setFitWidth(CELL_WIDTH);
-                imageView.setFitHeight(CELL_HEIGHT);
-                Label label = new Label(value.toString());
-                label.setPrefWidth(CELL_WIDTH);
-                label.setPrefHeight(CELL_HEIGHT);
-
-                StackPane stackPane = new StackPane();
-                stackPane.getChildren().addAll(imageView,label);
-                label.setAlignment(Pos.CENTER);
-                mapGrid.add(stackPane,key.getX()-x+1,height-(key.getY()-y)+1);
-            } else {
-                Image image = new Image("/images/grass.png");
-                ImageView imageView = new ImageView(image);
-                imageView.setPreserveRatio(true);
-                imageView.setFitWidth(CELL_WIDTH);
-                imageView.setFitHeight(CELL_HEIGHT);
-                mapGrid.add(imageView,key.getX()-x+1,height-(key.getY()-y)+1);
-            }
-
+            WorldElementBox worldElementBox = new WorldElementBox(value);
+            mapGrid.add(worldElementBox,key.getX()-x+1,height-(key.getY()-y)+1);
         } );
     }
     public synchronized void mapChanged(WorldMap worldMap, String message) {

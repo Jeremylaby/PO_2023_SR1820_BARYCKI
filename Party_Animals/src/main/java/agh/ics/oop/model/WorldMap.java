@@ -4,8 +4,7 @@ import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.util.Boundary;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -14,6 +13,7 @@ import java.util.UUID;
  * @author apohllo, idzik
  */
 public interface WorldMap extends MoveValidator {
+
 
     /**
      * Place a animal on the map.
@@ -38,7 +38,7 @@ public interface WorldMap extends MoveValidator {
      * @return True if the position is occupied.
      */
     default boolean isOccupied(Vector2d position) {
-        return objectAt(position) != null;
+        return objectAt(position).isPresent();
     }
 
     ;
@@ -49,10 +49,13 @@ public interface WorldMap extends MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    WorldElement objectAt(Vector2d position);
+    default Optional<WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(getElements().get(position));
+    }
     UUID getId();
 
     Boundary getCurrentBounds();
 
     Map<Vector2d, WorldElement> getElements();
+    public List<Animal> getOrderedAnimals();
 }

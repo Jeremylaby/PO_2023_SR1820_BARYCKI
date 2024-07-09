@@ -21,6 +21,20 @@ public class Animal implements WorldElement{
         return position;
     }
 
+    @Override
+    public String getTexture() {
+        return (switch (this.orientation){
+            case NORTH -> "pig.png";
+            case WEST -> "pigW.png";
+            case SOUTH -> "pigS.png";
+            case EAST -> "pigE.png";
+        });
+    }
+
+    @Override
+    public String getTextureText() {
+        return ("Z "+this.position);
+    }
 
 
     @Override
